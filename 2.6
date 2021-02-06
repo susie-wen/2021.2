@@ -1,0 +1,108 @@
+//实现自己的strcpy
+
+void my_strcpy(char* dest,char* src)
+{
+    int i=0;
+   while(*(src)!='\0')
+    {
+     *dest=*src;//字符指针解引用可以访问一个字符
+     src++;
+     dest++;
+    }
+    *dest=*src;//此时*src里面放的是\0
+    
+}
+int main()
+{
+    char arr1[]="###########";
+    char arr2[]="bit";
+    my_strcpy(arr1,arr2);
+    printf("%s\n",arr2);
+    return 0;
+}
+
+//如何优化？
+
+void my_strcpy(char* dest,char* src)
+{
+    int i=0;
+   while(*(src)!='\0')
+    {
+     *dest++=*src++;//这里1111111111111111
+    }
+    *dest=*src;
+    
+}
+int main()
+{
+    char arr1[]="###########";
+    char arr2[]="bit";
+    my_strcpy(arr1,arr2);
+    printf("%s\n",arr2);
+    return 0;
+}
+
+//如何进一步优化？
+
+void my_strcpy(char* dest,char* src)
+{
+   while( *dest++=*src++)//这里：因为‘\0’=0
+    {
+          ;
+    }
+    
+    
+}
+int main()
+{
+    char arr1[]="###########";
+    char arr2[]="bit";
+    my_strcpy(arr1,arr2);
+    printf("%s\n",arr2);
+    return 0;
+}
+
+//如何进进一步优化？
+使用assert–断言–需要引用头文件#include<assert.h>
+
+#include<assert.h>
+#include<stdio.h>
+void my_strcpy(char* dest,char* src)
+{
+    assert(dest != NULL);//断言--如果不满足会报错--易于发现问题
+    assert(src !=NULL);
+   while( *dest++=*src++)//这里：因为‘\0’=0
+    {
+          ;
+    }   
+}
+int main()
+{
+    char arr1[]="###########";
+    char arr2[]="bit";
+    my_strcpy(arr1,arr2);
+    printf("%s\n",arr2);
+    return 0;
+}
+
+//如何进进进一步优化？
+
+#include<assert.h>
+#include<stdio.h>
+void my_strcpy(char* dest,const char* src)//这里加了const
+{
+    assert(dest != NULL);
+    assert(src !=NULL);
+   while( *dest++=*src++)
+    {
+          ;
+    }   
+}
+int main()
+{
+    char arr1[]="###########";
+    char arr2[]="bit";
+    my_strcpy(arr1,arr2);
+    printf("%s\n",arr2);
+    return 0;
+}
